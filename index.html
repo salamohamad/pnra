@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Facebook-annonsförhandsvisningar för Pensionera.">
-  <title>Pensionera | Facebook Ad Preview</title>
+  <meta name="description" content="Meta- och Google-annonsförhandsvisningar för Pensionera.">
+  <title>Pensionera | Ad Preview</title>
   <style>
     :root {
       color-scheme: light;
@@ -142,6 +142,99 @@
       color: var(--muted);
       font-size: clamp(15px, 2vw, 17px);
       line-height: 1.5;
+    }
+
+    .preview-controls {
+      display: grid;
+      max-width: 860px;
+      margin: 0 auto clamp(24px, 4vw, 38px);
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid #dde0e5;
+      border-radius: 14px;
+      background: rgb(255 255 255 / 88%);
+      box-shadow: 0 8px 30px rgb(23 25 76 / 7%);
+    }
+
+    .control-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .control-label {
+      flex: 0 0 72px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    .segmented-control {
+      display: flex;
+      min-width: 0;
+      flex: 1;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .format-button {
+      min-height: 38px;
+      padding: 8px 13px;
+      border: 1px solid #d7d9de;
+      border-radius: 999px;
+      background: white;
+      color: #33363b;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .format-button:hover {
+      border-color: #a9adb5;
+      background: #f7f8fa;
+    }
+
+    .format-button[aria-pressed="true"] {
+      border-color: var(--navy);
+      background: var(--navy);
+      color: white;
+      box-shadow: 0 4px 14px rgb(23 25 76 / 18%);
+    }
+
+    .format-button[hidden] {
+      display: none;
+    }
+
+    .format-status {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 11px 13px;
+      border-radius: 9px;
+      background: #edf5ff;
+      color: #234369;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      margin-top: 5px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: #1877f2;
+    }
+
+    .format-status.needs-assets {
+      background: #fff5df;
+      color: #694b0d;
+    }
+
+    .format-status.needs-assets .status-dot {
+      background: #e89b00;
     }
 
     .preview-grid {
@@ -367,6 +460,157 @@
       stroke-width: 1.8;
     }
 
+    .google-shell {
+      overflow: hidden;
+      border: 1px solid #dfe1e5;
+      border-radius: 12px;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .google-card-header {
+      display: flex;
+      min-height: 56px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 14px;
+      border-bottom: 1px solid #e7e8eb;
+    }
+
+    .google-brand {
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .google-brand .page-avatar {
+      margin: 0;
+    }
+
+    .google-brand-copy {
+      min-width: 0;
+    }
+
+    .google-brand-copy strong,
+    .google-brand-copy span {
+      display: block;
+    }
+
+    .google-brand-copy strong {
+      font-size: 14px;
+    }
+
+    .google-brand-copy span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .dimension-badge {
+      flex: 0 0 auto;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: #eef1f5;
+      color: #50545a;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .google-creative-stage {
+      position: relative;
+      display: grid;
+      overflow: hidden;
+      width: 100%;
+      aspect-ratio: var(--preview-ratio, 1 / 1);
+      place-items: center;
+      background-color: #eef0f4;
+      background-image:
+        linear-gradient(45deg, rgb(255 255 255 / 48%) 25%, transparent 25%),
+        linear-gradient(-45deg, rgb(255 255 255 / 48%) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgb(255 255 255 / 48%) 75%),
+        linear-gradient(-45deg, transparent 75%, rgb(255 255 255 / 48%) 75%);
+      background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+      background-size: 20px 20px;
+    }
+
+    .google-creative {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .google-creative.fallback {
+      object-fit: contain;
+    }
+
+    .asset-warning {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      padding: 7px 10px;
+      border: 1px solid rgb(122 83 7 / 18%);
+      border-radius: 999px;
+      background: rgb(255 248 226 / 94%);
+      color: #684807;
+      box-shadow: 0 3px 12px rgb(0 0 0 / 12%);
+      font-size: 11px;
+      font-weight: 800;
+      backdrop-filter: blur(8px);
+    }
+
+    .google-ad-footer {
+      display: flex;
+      min-height: 84px;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 14px;
+      border-top: 1px solid #e3e5e8;
+    }
+
+    .google-ad-copy {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .google-ad-copy strong {
+      display: -webkit-box;
+      overflow: hidden;
+      font-size: 16px;
+      line-height: 21px;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .google-ad-copy span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .google-cta {
+      display: inline-flex;
+      min-width: 96px;
+      min-height: 42px;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border-radius: 5px;
+      background: #1a73e8;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .google-cta:hover {
+      background: #1765cc;
+    }
+
     .footer-note {
       margin: 34px auto 0;
       color: #7d7f84;
@@ -408,7 +652,39 @@
         padding: 0 20px;
       }
 
+      .preview-controls {
+        margin-right: 12px;
+        margin-left: 12px;
+        padding: 14px;
+        border-radius: 11px;
+      }
+
+      .control-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+      }
+
+      .control-label {
+        flex-basis: auto;
+      }
+
+      .segmented-control {
+        width: 100%;
+      }
+
+      .format-button {
+        flex: 1 1 auto;
+      }
+
       .ad-shell {
+        border-right: 0;
+        border-left: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .google-shell {
         border-right: 0;
         border-left: 0;
         border-radius: 0;
@@ -425,22 +701,45 @@
       </div>
       <div>
         <p class="brand-title"><strong>Pensionera</strong> Ad Preview</p>
-        <p class="brand-subtitle">Facebook Feed</p>
+        <p class="brand-subtitle" id="brand-subtitle">Meta Feed</p>
       </div>
     </div>
-    <span class="count" id="ad-count">18 annonser</span>
+    <span class="count" id="ad-count">23 annonser</span>
   </header>
 
   <main>
     <section class="intro" aria-labelledby="page-title">
       <p class="eyebrow">Creative review</p>
-      <h1 id="page-title">Facebook-annons­förhandsvisning</h1>
-      <p class="intro-copy">Så här visas annonserna i ett Facebook-liknande flöde på dator och mobil.</p>
+      <h1 id="page-title">Annons­förhandsvisning</h1>
+      <p class="intro-copy" id="intro-copy">Jämför hur samma kampanj visas i Meta- och Google-format.</p>
     </section>
 
-    <section class="preview-grid" id="preview-grid" aria-label="Facebook ad previews"></section>
+    <section class="preview-controls" aria-label="Välj kanal och format">
+      <div class="control-row">
+        <span class="control-label">Kanal</span>
+        <div class="segmented-control" id="platform-controls">
+          <button class="format-button" type="button" data-platform="meta" aria-pressed="true">Meta</button>
+          <button class="format-button" type="button" data-platform="google" aria-pressed="false">Google</button>
+        </div>
+      </div>
+      <div class="control-row">
+        <span class="control-label">Format</span>
+        <div class="segmented-control" id="format-controls">
+          <button class="format-button" type="button" data-format="meta-square" aria-pressed="true">Feed 1:1</button>
+          <button class="format-button" type="button" data-format="google-square" data-google-only hidden aria-pressed="false">Square · 1200 × 1200</button>
+          <button class="format-button" type="button" data-format="google-landscape" data-google-only hidden aria-pressed="false">Landscape · 1200 × 628</button>
+          <button class="format-button" type="button" data-format="google-portrait" data-google-only hidden aria-pressed="false">Portrait · 960 × 1200</button>
+        </div>
+      </div>
+      <div class="format-status" id="format-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="format-status-text">23 Meta-kort visas i kvadratiskt feed-format.</span>
+      </div>
+    </section>
 
-    <p class="footer-note">Förhandsvisningen är en visuell simulering och är inte ansluten till Meta.</p>
+    <section class="preview-grid" id="preview-grid" aria-label="Ad previews"></section>
+
+    <p class="footer-note">Förhandsvisningen är en visuell simulering och är inte ansluten till Meta eller Google.</p>
   </main>
 
   <script>
@@ -608,6 +907,62 @@
       }
     ];
 
+    const formats = {
+      "meta-square": {
+        platform: "meta",
+        assetKey: "square",
+        label: "Meta Feed 1:1",
+        dimensions: "1080 × 1080",
+        ratio: "1 / 1"
+      },
+      "google-square": {
+        platform: "google",
+        assetKey: "square",
+        label: "Google Square",
+        dimensions: "1200 × 1200",
+        minimum: "300 × 300",
+        ratio: "1 / 1"
+      },
+      "google-landscape": {
+        platform: "google",
+        assetKey: "landscape",
+        label: "Google Landscape",
+        dimensions: "1200 × 628",
+        minimum: "600 × 314",
+        ratio: "1200 / 628"
+      },
+      "google-portrait": {
+        platform: "google",
+        assetKey: "portrait",
+        label: "Google Portrait",
+        dimensions: "960 × 1200",
+        minimum: "480 × 600",
+        ratio: "4 / 5"
+      }
+    };
+
+    let selectedPlatform = "meta";
+    let selectedFormat = "meta-square";
+
+    // Add format-specific files to an ad with:
+    // assets: { square: "...", landscape: "...", portrait: "..." }
+    function getAssets(ad) {
+      return {
+        ...(ad.image ? { square: ad.image } : {}),
+        ...(ad.assets || {})
+      };
+    }
+
+    function resolveCreative(ad, format) {
+      const assets = getAssets(ad);
+      const exactAsset = assets[format.assetKey];
+
+      return {
+        src: exactAsset || assets.square || ad.image,
+        isFallback: !exactAsset
+      };
+    }
+
     const globeIcon = `
       <svg class="globe" viewBox="0 0 24 24" aria-label="Offentlig">
         <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm6.92 6h-3.17a15.7 15.7 0 0 0-1.38-3.56A8.05 8.05 0 0 1 18.92 8ZM12 4c.83 1.2 1.46 2.55 1.83 4h-3.66A13.7 13.7 0 0 1 12 4ZM4.26 14a8 8 0 0 1 0-4h3.41a16.4 16.4 0 0 0 0 4H4.26Zm.82 2h3.17c.3 1.27.77 2.46 1.38 3.56A8.05 8.05 0 0 1 5.08 16Zm3.17-8H5.08a8.05 8.05 0 0 1 4.55-3.56A15.7 15.7 0 0 0 8.25 8ZM12 20a13.7 13.7 0 0 1-1.83-4h3.66A13.7 13.7 0 0 1 12 20Zm2.25-6h-4.5a14.3 14.3 0 0 1 0-4h4.5a14.3 14.3 0 0 1 0 4Zm.12 5.56c.61-1.1 1.08-2.29 1.38-3.56h3.17a8.05 8.05 0 0 1-4.55 3.56ZM16.33 14a16.4 16.4 0 0 0 0-4h3.41a8 8 0 0 1 0 4h-3.41Z"/>
@@ -619,7 +974,7 @@
       share: '<svg viewBox="0 0 24 24"><path d="m13 5 7 7-7 7v-4c-5 0-8 1.5-10 4 1-5 4-9 10-10V5Z"/></svg>'
     };
 
-    function renderAd(ad, index) {
+    function renderMetaAd(ad, index) {
       const likes = 18 + ((index * 7) % 29);
       const comments = 2 + (index % 6);
       const loading = index < 2 ? "eager" : "lazy";
@@ -672,8 +1027,122 @@
         </article>`;
     }
 
-    document.getElementById("preview-grid").innerHTML = ads.map(renderAd).join("");
-    document.getElementById("ad-count").textContent = `${ads.length} annonser`;
+    function renderGoogleAd(ad, index, format) {
+      const creative = resolveCreative(ad, format);
+      const loading = index < 4 ? "eager" : "lazy";
+      const fallbackClass = creative.isFallback ? " fallback" : "";
+      const warning = creative.isFallback
+        ? '<span class="asset-warning">1:1 fallback · anpassning behövs</span>'
+        : "";
+
+      return `
+        <article class="google-shell">
+          <header class="google-card-header">
+            <div class="google-brand">
+              <div class="page-avatar" aria-hidden="true">
+                <img class="avatar-image" src="assets/pensionera-avatar.jpg" alt="">
+              </div>
+              <div class="google-brand-copy">
+                <strong>Pensionera</strong>
+                <span>Google Ads asset</span>
+              </div>
+            </div>
+            <span class="dimension-badge">${format.dimensions}</span>
+          </header>
+
+          <div class="google-creative-stage" style="--preview-ratio: ${format.ratio}">
+            <img
+              class="google-creative${fallbackClass}"
+              src="assets/${creative.src}"
+              alt="Pensionera-annons: ${ad.alt}"
+              loading="${loading}"
+            >
+            ${warning}
+          </div>
+
+          <div class="google-ad-footer">
+            <div class="google-ad-copy">
+              <strong>${ad.title}</strong>
+              <span>pensionera.se</span>
+            </div>
+            <a class="google-cta" href="${ad.url}" target="_blank" rel="noopener noreferrer">Läs mer</a>
+          </div>
+        </article>`;
+    }
+
+    function updateStatus(format) {
+      const exactAssets = ads.filter((ad) => Boolean(getAssets(ad)[format.assetKey])).length;
+      const status = document.getElementById("format-status");
+      const statusText = document.getElementById("format-status-text");
+
+      if (format.platform === "meta") {
+        status.classList.remove("needs-assets");
+        statusText.textContent = `${ads.length} Meta-kort visas i kvadratiskt feed-format.`;
+        return;
+      }
+
+      if (format.assetKey === "square") {
+        status.classList.remove("needs-assets");
+        statusText.textContent =
+          `${exactAssets} kvadratiska kreativer är tillgängliga. Nuvarande 1080 × 1080-filer klarar minimum ${format.minimum}; exportera helst ${format.dimensions} för slutleverans.`;
+        return;
+      }
+
+      status.classList.add("needs-assets");
+      statusText.textContent =
+        `${exactAssets} av ${ads.length} annonser har en egen ${format.label.toLowerCase()}-variant. Rekommenderat ${format.dimensions}, minimum ${format.minimum}. Kvadratiska original visas utan beskärning tills anpassade kompositioner läggs till.`;
+    }
+
+    function updateControls() {
+      document.querySelectorAll("[data-platform]").forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.platform === selectedPlatform));
+      });
+
+      document.querySelectorAll("[data-format]").forEach((button) => {
+        const isGoogleFormat = button.hasAttribute("data-google-only");
+        button.hidden = selectedPlatform === "meta" ? isGoogleFormat : !isGoogleFormat;
+        button.setAttribute("aria-pressed", String(button.dataset.format === selectedFormat));
+      });
+    }
+
+    function renderPreview() {
+      const format = formats[selectedFormat];
+      const grid = document.getElementById("preview-grid");
+
+      grid.innerHTML = format.platform === "meta"
+        ? ads.map(renderMetaAd).join("")
+        : ads.map((ad, index) => renderGoogleAd(ad, index, format)).join("");
+
+      document.getElementById("ad-count").textContent = `${ads.length} annonser`;
+      document.getElementById("brand-subtitle").textContent = format.label;
+      document.getElementById("intro-copy").textContent = format.platform === "meta"
+        ? "Facebook-liknande feedkort med primärtext, kreativ, destination och CTA."
+        : `${format.label} · rekommenderad storlek ${format.dimensions}.`;
+      grid.setAttribute("aria-label", `${format.label} previews`);
+
+      updateControls();
+      updateStatus(format);
+    }
+
+    document.getElementById("platform-controls").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-platform]");
+      if (!button) return;
+
+      selectedPlatform = button.dataset.platform;
+      selectedFormat = selectedPlatform === "meta" ? "meta-square" : "google-square";
+      renderPreview();
+    });
+
+    document.getElementById("format-controls").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-format]");
+      if (!button || button.hidden) return;
+
+      selectedFormat = button.dataset.format;
+      selectedPlatform = formats[selectedFormat].platform;
+      renderPreview();
+    });
+
+    renderPreview();
   </script>
 </body>
 </html>
