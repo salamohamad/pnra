@@ -251,12 +251,13 @@
 
     .link-card {
       display: flex;
-      min-height: 78px;
+      min-height: 86px;
       align-items: center;
-      gap: 12px;
-      padding: 10px 14px 11px;
+      gap: 16px;
+      padding: 13px 16px;
       border-top: 1px solid var(--line);
-      background: #f0f2f5;
+      border-bottom: 1px solid var(--soft-line);
+      background: #f5f6f7;
     }
 
     .link-details {
@@ -264,37 +265,36 @@
       flex: 1;
     }
 
-    .domain {
-      overflow: hidden;
-      margin: 0 0 3px;
-      color: var(--muted);
-      font-size: 12px;
-      text-overflow: ellipsis;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
     .link-title {
       display: -webkit-box;
       overflow: hidden;
       margin: 0;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 700;
-      line-height: 20px;
+      line-height: 22px;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
     }
 
     .cta {
+      display: inline-flex;
       flex: 0 0 auto;
-      padding: 10px 14px;
+      min-width: 104px;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 17px;
       border: 0;
-      border-radius: 6px;
-      background: #e4e6eb;
+      border-radius: 8px;
+      background: #e1e4e8;
       color: #050505;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       text-decoration: none;
+    }
+
+    .cta:hover {
+      background: #d8dbe0;
     }
 
     .social-proof {
@@ -570,6 +570,41 @@
         copy: "Pensionsinformationen är ofta utspridd. Pensionera samlar överblick, prognos och möjliga förbättringar så att du kan fatta bättre beslut långt före pensionen.",
         title: "Från pensionsdata till en tydlig plan",
         url: "https://www.pensionera.se/pensionsradgivning"
+      },
+      {
+        image: "employer-contribution.png",
+        alt: "Din arbetsgivare betalar in varje månad. Vet du vart?",
+        copy: "Arbetsgivaren betalar ofta in till din tjänstepension varje månad. Se var pengarna hamnar, hur de är placerade och om valen fortfarande passar dig.",
+        title: "Ta kontroll över din tjänstepension",
+        url: "https://www.pensionera.se/pensionsspara"
+      },
+      {
+        image: "orange-kuvert-live.png",
+        alt: "Det orange kuvertet är borta. Din pension finns live.",
+        copy: "Pensionen förändras året runt, inte bara när det orange kuvertet kommer. Se värde, utveckling och prognos när det passar dig.",
+        title: "Se din pension live på ett ställe",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      },
+      {
+        image: "first-salary-app.png",
+        alt: "Din pension startade vid din första lön",
+        copy: "Pensionen började byggas redan vid första lönen. Se vad som hunnit samlas, var pengarna finns och hur dina val idag kan påverka framtiden.",
+        title: "Se allt du redan tjänat in",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      },
+      {
+        image: "commute-pendeln.png",
+        alt: "Pendeln hem. Pensionskoll klar.",
+        copy: "En kort stund på pendeln räcker för att få överblick. Logga in med BankID och se pensionerna, prognosen och nästa steg på ett ställe.",
+        title: "Få pensionskoll innan du är hemma",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      },
+      {
+        image: "hinna-bli.png",
+        alt: "Hur mycket kan din pension hinna bli?",
+        copy: "Du har fortfarande tid att påverka. Se din prognos och förstå hur avgifter, risk, sparande och fondval kan forma pensionen framåt.",
+        title: "Se hur din pension kan utvecklas",
+        url: "https://www.pensionera.se/pensionsspara"
       }
     ];
 
@@ -613,7 +648,6 @@
 
           <div class="link-card">
             <div class="link-details">
-              <p class="domain">PENSIONERA.SE</p>
               <p class="link-title">${ad.title}</p>
             </div>
             <a class="cta" href="${ad.url}" target="_blank" rel="noopener noreferrer">Läs mer</a>
