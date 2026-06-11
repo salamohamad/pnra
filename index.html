@@ -729,7 +729,7 @@
         <p class="brand-subtitle" id="brand-subtitle">Meta Feed</p>
       </div>
     </div>
-    <span class="count" id="ad-count">23 annonser</span>
+    <span class="count" id="ad-count">38 annonser</span>
   </header>
 
   <main>
@@ -744,10 +744,10 @@
         <span class="control-label">Kanal</span>
         <div class="segmented-control" id="platform-controls">
           <button class="format-button" type="button" data-platform="meta" aria-pressed="true">
-            Meta <span class="tab-count" data-platform-count="meta">23</span>
+            Meta <span class="tab-count" data-platform-count="meta">38</span>
           </button>
           <button class="format-button" type="button" data-platform="google" aria-pressed="false">
-            Google <span class="tab-count" data-platform-count="google">0</span>
+            Google <span class="tab-count" data-platform-count="google">45</span>
           </button>
         </div>
       </div>
@@ -755,22 +755,22 @@
         <span class="control-label">Format</span>
         <div class="segmented-control" id="format-controls">
           <button class="format-button" type="button" data-format="meta-square" aria-pressed="true">
-            Feed 1:1 <span class="tab-count" data-format-count="meta-square">23</span>
+            Feed 1:1 <span class="tab-count" data-format-count="meta-square">38</span>
           </button>
           <button class="format-button" type="button" data-format="google-square" data-google-only hidden aria-pressed="false">
-            Square · 1200 × 1200 <span class="tab-count" data-format-count="google-square">0</span>
+            Square · 1200 × 1200 <span class="tab-count" data-format-count="google-square">15</span>
           </button>
           <button class="format-button" type="button" data-format="google-landscape" data-google-only hidden aria-pressed="false">
-            Landscape · 1200 × 628 <span class="tab-count" data-format-count="google-landscape">0</span>
+            Landscape · 1200 × 628 <span class="tab-count" data-format-count="google-landscape">15</span>
           </button>
           <button class="format-button" type="button" data-format="google-portrait" data-google-only hidden aria-pressed="false">
-            Portrait · 960 × 1200 <span class="tab-count" data-format-count="google-portrait">0</span>
+            Portrait · 960 × 1200 <span class="tab-count" data-format-count="google-portrait">15</span>
           </button>
         </div>
       </div>
       <div class="format-status" id="format-status">
         <span class="status-dot" aria-hidden="true"></span>
-        <span id="format-status-text">23 Meta-kort visas i kvadratiskt feed-format.</span>
+        <span id="format-status-text">38 Meta-kort visas i kvadratiskt feed-format.</span>
       </div>
     </section>
 
@@ -944,11 +944,175 @@
       }
     ];
 
-    // Google collections are independent. Only add a file after checking its
-    // actual pixel dimensions and assigning it to the matching collection.
-    const googleSquareAds = []; // Recommended 1200 × 1200; minimum 300 × 300.
-    const googleLandscapeAds = []; // Recommended 1200 × 628; minimum 600 × 314.
-    const googlePortraitAds = []; // Recommended 960 × 1200; minimum 480 × 600.
+    const campaignAds = {
+      "kaffe-vs-koll": {
+        alt: "Kaffe: 55 kr. Din pensionskoll: 0 kr.",
+        copy: "En kaffe tar några minuter och kostar 55 kronor. På ungefär samma tid kan du få en samlad pensionsöverblick kostnadsfritt med BankID.",
+        title: "Gör en kostnadsfri pensionskoll",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      },
+      "fonder-du-inte-valde": {
+        alt: "Din arbetsgivare valde fonder åt dig. Vet du vad du äger?",
+        copy: "Din arbetsgivare kan ha valt pensionsfonder åt dig. Se vilka fonder du äger, vad de kostar och om de fortfarande passar dina mål.",
+        title: "Se och optimera dina pensionsfonder",
+        url: "https://www.pensionera.se/pensionsspara"
+      },
+      "nytt-jobb-koll": {
+        alt: "Nytt jobb? Din gamla pension bor kvar.",
+        copy: "Ett jobbyte flyttar inte automatiskt din gamla tjänstepension. Se pensioner från tidigare och nuvarande jobb samlade på ett ställe.",
+        title: "Hitta pensionerna från alla dina jobb",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      },
+      "podden-vs-pension": {
+        alt: "30 min för podden. 60 sek för pensionen.",
+        copy: "Du hinner få koll medan podden laddar. Logga in med BankID och se pension, prognos och utveckling samlat.",
+        title: "Ge pensionen 60 sekunder",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      },
+      "skatt-liknelse": {
+        alt: "Du gör deklarationen på 5 min. Pensionskollen tar 60 sekunder.",
+        copy: "Pensionskoll behöver inte vara komplicerat. Logga in med BankID och se hela bilden på ungefär en minut.",
+        title: "Gör pensionskollen på 60 sekunder",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      },
+      "optimera-nu": {
+        alt: "Din pension. Hela bilden. Kostnadsfritt.",
+        copy: "Samla pensionerna, se prognosen och upptäck möjliga förbättringar. Allt börjar med en kostnadsfri överblick.",
+        title: "Se hela pensionen och möjliga förbättringar",
+        url: "https://www.pensionera.se/pensionsspara"
+      },
+      "ny-familj": {
+        alt: "Ny familj. Dags att kolla hela din pension.",
+        copy: "När livet förändras är det klokt att uppdatera planen. Se hur pensionen ser ut och vad familjeliv, ledighet och sparande kan påverka.",
+        title: "Låt pensionsplanen följa livet",
+        url: "https://www.pensionera.se/pensionsradgivning"
+      },
+      "puls-koll": {
+        alt: "Du kollar pulsen. Kolla pensionen lika enkelt.",
+        copy: "Du följer hälsan idag. Följ också ekonomin för framtiden. Se pension, prognos och val som kan påverka livet efter jobbet.",
+        title: "Ta pulsen på din pension",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      },
+      "tidigt-start": {
+        alt: "Din pension börjar idag. Inte om 30 år.",
+        copy: "Tid är pensionens starkaste fördel. Se hur ränta på ränta, avgifter och fondval kan påverka resultatet när du börjar tidigt.",
+        title: "Låt tiden arbeta för pensionen",
+        url: "https://www.pensionera.se/pensionsspara"
+      },
+      "avgifter-tar": {
+        alt: "Vet du vad din pension kostar? Avgifterna kan ta tusentals kronor om året.",
+        copy: "Små avgifter kan bli stora belopp över många år. Se vad din pension kostar och upptäck om det finns bättre förutsättningar.",
+        title: "Se vad avgifterna kostar din pension",
+        url: "https://www.pensionera.se/pensionsspara"
+      },
+      "vaxter-just-nu": {
+        alt: "Din pension växer just nu.",
+        copy: "Din pension byggs varje månad. Se hur den växer, vad du kan få och vilka val som kan påverka utvecklingen framåt.",
+        title: "Se din pension växa redan idag",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      },
+      "net-koll": {
+        alt: "Koll på bolånet – och pensionen?",
+        copy: "Du jämför räntan på bolånet. Gör samma sak med pensionen. Se alla pensioner, kostnader och prognos på ett ställe.",
+        title: "Få lika bra koll på pensionen som bolånet",
+        url: "https://www.pensionera.se/pensionsspara"
+      },
+      "semester-koll": {
+        alt: "Du planerar semestern. Har du kollat din pension?",
+        copy: "Semestern planerar du i detalj. Men har du koll på pensionen? Se vad du har, hur den utvecklas och vad du kan påverka.",
+        title: "Planera pensionen lika enkelt som semestern",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      },
+      "kollegor-koll": {
+        alt: "Se hela din pension på din lunch.",
+        copy: "En lunchrast räcker för att få en tydligare bild av pensionen. Logga in med BankID och se pensioner och prognos samlat.",
+        title: "Få pensionskoll på lunchrasten",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      },
+      "bankid-du-redan-har": {
+        alt: "BankID har du redan. Din pension är ett knapptryck bort.",
+        copy: "Du har redan det som behövs för att börja. Logga in med BankID och få pensioner, prognos och utveckling samlat på ett ställe.",
+        title: "Din pension är ett knapptryck bort",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      }
+    };
+
+    function campaignAsset(campaign, image) {
+      return { ...campaignAds[campaign], image };
+    }
+
+    metaSquareAds.push(
+      campaignAsset("kaffe-vs-koll", "kaffe-vs-koll__meta-square.png"),
+      campaignAsset("fonder-du-inte-valde", "fonder-du-inte-valde__meta-square.png"),
+      campaignAsset("nytt-jobb-koll", "nytt-jobb-koll__meta-square.png"),
+      campaignAsset("podden-vs-pension", "podden-vs-pension__meta-square.png"),
+      campaignAsset("skatt-liknelse", "skatt-liknelse__meta-square.png"),
+      campaignAsset("optimera-nu", "optimera-nu__meta-square.png"),
+      campaignAsset("ny-familj", "ny-familj__meta-square.png"),
+      campaignAsset("puls-koll", "puls-koll__meta-square.png"),
+      campaignAsset("tidigt-start", "tidigt-start__meta-square.png"),
+      campaignAsset("avgifter-tar", "avgifter-tar__meta-square.png"),
+      campaignAsset("vaxter-just-nu", "vaxter-just-nu__meta-square.png"),
+      campaignAsset("net-koll", "net-koll__meta-square.png"),
+      campaignAsset("semester-koll", "semester-koll__meta-square.png"),
+      campaignAsset("kollegor-koll", "kollegor-koll__meta-square.png"),
+      campaignAsset("bankid-du-redan-har", "bankid-du-redan-har__meta-square.png")
+    );
+
+    // Each collection lists only files verified at that collection's dimensions.
+    const googleSquareAds = [
+      campaignAsset("kaffe-vs-koll", "kaffe-vs-koll__google-square.png"),
+      campaignAsset("fonder-du-inte-valde", "fonder-du-inte-valde__google-square.png"),
+      campaignAsset("nytt-jobb-koll", "nytt-jobb-koll__google-square.png"),
+      campaignAsset("podden-vs-pension", "podden-vs-pension__google-square.png"),
+      campaignAsset("skatt-liknelse", "skatt-liknelse__google-square.png"),
+      campaignAsset("optimera-nu", "optimera-nu__google-square.png"),
+      campaignAsset("ny-familj", "ny-familj__google-square.png"),
+      campaignAsset("puls-koll", "puls-koll__google-square.png"),
+      campaignAsset("tidigt-start", "tidigt-start__google-square.png"),
+      campaignAsset("avgifter-tar", "avgifter-tar__google-square.png"),
+      campaignAsset("vaxter-just-nu", "vaxter-just-nu__google-square.png"),
+      campaignAsset("net-koll", "net-koll__google-square.png"),
+      campaignAsset("semester-koll", "semester-koll__google-square.png"),
+      campaignAsset("kollegor-koll", "kollegor-koll__google-square.png"),
+      campaignAsset("bankid-du-redan-har", "bankid-du-redan-har__google-square.png")
+    ];
+
+    const googleLandscapeAds = [
+      campaignAsset("kaffe-vs-koll", "kaffe-vs-koll__google-landscape.png"),
+      campaignAsset("fonder-du-inte-valde", "fonder-du-inte-valde__google-landscape.png"),
+      campaignAsset("nytt-jobb-koll", "nytt-jobb-koll__google-landscape.png"),
+      campaignAsset("podden-vs-pension", "podden-vs-pension__google-landscape.png"),
+      campaignAsset("skatt-liknelse", "skatt-liknelse__google-landscape.png"),
+      campaignAsset("optimera-nu", "optimera-nu__google-landscape.png"),
+      campaignAsset("ny-familj", "ny-familj__google-landscape.png"),
+      campaignAsset("puls-koll", "puls-koll__google-landscape.png"),
+      campaignAsset("tidigt-start", "tidigt-start__google-landscape.png"),
+      campaignAsset("avgifter-tar", "avgifter-tar__google-landscape.png"),
+      campaignAsset("vaxter-just-nu", "vaxter-just-nu__google-landscape.png"),
+      campaignAsset("net-koll", "net-koll__google-landscape.png"),
+      campaignAsset("semester-koll", "semester-koll__google-landscape.png"),
+      campaignAsset("kollegor-koll", "kollegor-koll__google-landscape.png"),
+      campaignAsset("bankid-du-redan-har", "bankid-du-redan-har__google-landscape.png")
+    ];
+
+    const googlePortraitAds = [
+      campaignAsset("kaffe-vs-koll", "kaffe-vs-koll__google-portrait.png"),
+      campaignAsset("fonder-du-inte-valde", "fonder-du-inte-valde__google-portrait.png"),
+      campaignAsset("nytt-jobb-koll", "nytt-jobb-koll__google-portrait.png"),
+      campaignAsset("podden-vs-pension", "podden-vs-pension__google-portrait.png"),
+      campaignAsset("skatt-liknelse", "skatt-liknelse__google-portrait.png"),
+      campaignAsset("optimera-nu", "optimera-nu__google-portrait.png"),
+      campaignAsset("ny-familj", "ny-familj__google-portrait.png"),
+      campaignAsset("puls-koll", "puls-koll__google-portrait.png"),
+      campaignAsset("tidigt-start", "tidigt-start__google-portrait.png"),
+      campaignAsset("avgifter-tar", "avgifter-tar__google-portrait.png"),
+      campaignAsset("vaxter-just-nu", "vaxter-just-nu__google-portrait.png"),
+      campaignAsset("net-koll", "net-koll__google-portrait.png"),
+      campaignAsset("semester-koll", "semester-koll__google-portrait.png"),
+      campaignAsset("kollegor-koll", "kollegor-koll__google-portrait.png"),
+      campaignAsset("bankid-du-redan-har", "bankid-du-redan-har__google-portrait.png")
+    ];
 
     const collections = {
       "meta-square": metaSquareAds,
@@ -1114,7 +1278,7 @@
       if (format.platform === "meta") {
         status.classList.remove("needs-assets");
         statusText.textContent =
-          `${items.length} Meta-kort visas. De befintliga 1080 × 1080-kreativerna tillhör endast Meta-samlingen.`;
+          `${items.length} Meta-kort visas. Kreativerna är verifierade i 1080 × 1080 och tillhör endast Meta-samlingen.`;
         return;
       }
 
