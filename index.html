@@ -203,6 +203,14 @@
       box-shadow: 0 4px 14px rgb(23 25 76 / 18%);
     }
 
+    .format-button:disabled {
+      border-color: #e4e6ea;
+      background: #f4f5f7;
+      color: #969aa2;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
     .tab-count {
       display: inline-grid;
       min-width: 20px;
@@ -359,6 +367,12 @@
       height: auto;
       aspect-ratio: 1;
       object-fit: cover;
+    }
+
+    .video-creative {
+      aspect-ratio: 4 / 5;
+      background: #101010;
+      object-fit: contain;
     }
 
     .link-card {
@@ -739,7 +753,18 @@
       <p class="intro-copy" id="intro-copy">Jämför hur samma kampanj visas i Meta- och Google-format.</p>
     </section>
 
-    <section class="preview-controls" aria-label="Välj kanal och format">
+    <section class="preview-controls" aria-label="Välj medietyp, kanal och format">
+      <div class="control-row">
+        <span class="control-label">Media</span>
+        <div class="segmented-control" id="media-controls">
+          <button class="format-button" type="button" data-media="photo" aria-pressed="true">
+            Bilder <span class="tab-count" data-media-count="photo">83</span>
+          </button>
+          <button class="format-button" type="button" data-media="video" aria-pressed="false">
+            Video <span class="tab-count" data-media-count="video">3</span>
+          </button>
+        </div>
+      </div>
       <div class="control-row">
         <span class="control-label">Kanal</span>
         <div class="segmented-control" id="platform-controls">
@@ -756,6 +781,9 @@
         <div class="segmented-control" id="format-controls">
           <button class="format-button" type="button" data-format="meta-square" aria-pressed="true">
             Feed 1:1 <span class="tab-count" data-format-count="meta-square">38</span>
+          </button>
+          <button class="format-button" type="button" data-format="meta-video-portrait" hidden aria-pressed="false">
+            Feed video 4:5 · 1080 × 1350 <span class="tab-count" data-format-count="meta-video-portrait">3</span>
           </button>
           <button class="format-button" type="button" data-format="google-square" data-google-only hidden aria-pressed="false">
             Square · 1200 × 1200 <span class="tab-count" data-format-count="google-square">15</span>
@@ -1059,6 +1087,30 @@
       campaignAsset("bankid-du-redan-har", "bankid-du-redan-har__meta-square.png")
     );
 
+    const metaPortraitVideos = [
+      {
+        video: "pensionera-video-01.mp4",
+        alt: "Pensionera videoannons om att få en samlad pensionsöverblick",
+        copy: "Vet du vad pensionen kan bli? Se pensioner, prognos och möjliga förbättringar samlat på ett ställe – kostnadsfritt med BankID.",
+        title: "Se hela pensionen på ett ställe",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      },
+      {
+        video: "pensionera-video-02.mp4",
+        alt: "Pensionera videoannons om pensionsplanering",
+        copy: "Små val idag kan påverka livet efter jobbet. Få koll på prognosen och förstå vad du kan göra medan tiden fortfarande arbetar för dig.",
+        title: "Börja planera pensionen idag",
+        url: "https://www.pensionera.se/pensionsspara"
+      },
+      {
+        video: "pensionera-video-03.mp4",
+        alt: "Pensionera videoannons om pensionens avgifter och fondval",
+        copy: "Avgifter och gamla fondval kan påverka pensionen mer än du tror. Se vad du har och upptäck möjliga förbättringar.",
+        title: "Se vad som påverkar din pension",
+        url: "https://www.pensionera.se/pensionsradgivning"
+      }
+    ];
+
     // Each collection lists only files verified at that collection's dimensions.
     const googleSquareAds = [
       campaignAsset("kaffe-vs-koll", "kaffe-vs-koll__google-square.png"),
@@ -1116,6 +1168,7 @@
 
     const collections = {
       "meta-square": metaSquareAds,
+      "meta-video-portrait": metaPortraitVideos,
       "google-square": googleSquareAds,
       "google-landscape": googleLandscapeAds,
       "google-portrait": googlePortraitAds
@@ -1123,13 +1176,24 @@
 
     const formats = {
       "meta-square": {
+        media: "photo",
         platform: "meta",
         label: "Meta Feed 1:1",
         dimensions: "1080 × 1080",
         collectionKey: "meta-square",
         ratio: "1 / 1"
       },
+      "meta-video-portrait": {
+        media: "video",
+        platform: "meta",
+        label: "Meta Feed Video 4:5",
+        dimensions: "1080 × 1350",
+        duration: "10 sekunder",
+        collectionKey: "meta-video-portrait",
+        ratio: "4 / 5"
+      },
       "google-square": {
+        media: "photo",
         platform: "google",
         label: "Google Square",
         dimensions: "1200 × 1200",
@@ -1138,6 +1202,7 @@
         ratio: "1 / 1"
       },
       "google-landscape": {
+        media: "photo",
         platform: "google",
         label: "Google Landscape",
         dimensions: "1200 × 628",
@@ -1146,6 +1211,7 @@
         ratio: "1200 / 628"
       },
       "google-portrait": {
+        media: "photo",
         platform: "google",
         label: "Google Portrait",
         dimensions: "960 × 1200",
@@ -1155,6 +1221,7 @@
       }
     };
 
+    let selectedMedia = "photo";
     let selectedPlatform = "meta";
     let selectedFormat = "meta-square";
 
@@ -1173,6 +1240,19 @@
       const likes = 18 + ((index * 7) % 29);
       const comments = 2 + (index % 6);
       const loading = index < 2 ? "eager" : "lazy";
+      const creative = ad.video
+        ? `
+            <video
+              class="creative video-creative"
+              controls
+              playsinline
+              preload="metadata"
+              aria-label="${ad.alt}"
+            >
+              <source src="assets/${ad.video}" type="video/mp4">
+              Din webbläsare kan inte spela upp videon.
+            </video>`
+        : `<img class="creative" src="assets/${ad.image}" alt="Pensionera-annons: ${ad.alt}" loading="${loading}">`;
 
       return `
         <article class="ad-shell">
@@ -1193,7 +1273,7 @@
           <p class="ad-copy">${ad.copy}</p>
 
           <div class="creative-wrap">
-            <img class="creative" src="assets/${ad.image}" alt="Pensionera-annons: ${ad.alt}" loading="${loading}">
+            ${creative}
           </div>
 
           <div class="link-card">
@@ -1260,13 +1340,14 @@
     }
 
     function renderEmptyState(format) {
+      const assetType = format.media === "video" ? "videor" : "bilder";
       return `
         <div class="empty-state">
-          <strong>Inga ${format.label}-bilder uppladdade ännu</strong>
+          <strong>Inga ${format.label}-${assetType} uppladdade ännu</strong>
           <p>
-            Den här fliken visar endast bilder som tillhör formatets egen dimensionssamling.
+            Den här fliken visar endast ${assetType} som tillhör formatets egen dimensionssamling.
             Ladda upp ${format.dimensions}${format.minimum ? ` eller minst ${format.minimum}` : ""}
-            så läggs bilden till här.
+            så läggs filen till här.
           </p>
         </div>`;
     }
@@ -1274,6 +1355,13 @@
     function updateStatus(format, items) {
       const status = document.getElementById("format-status");
       const statusText = document.getElementById("format-status-text");
+
+      if (format.media === "video") {
+        status.classList.remove("needs-assets");
+        statusText.textContent =
+          `${items.length} Meta-videor visas. Filerna är verifierade i ${format.dimensions} (4:5), ${format.duration}, och tillhör endast videosamlingen.`;
+        return;
+      }
 
       if (format.platform === "meta") {
         status.classList.remove("needs-assets");
@@ -1294,24 +1382,51 @@
         `Inga bilder i ${format.label}-samlingen. Meta-bilder återanvänds inte här. Rekommenderat ${format.dimensions}, minimum ${format.minimum}.`;
     }
 
-    function updateControls() {
-      const googleTotal =
-        googleSquareAds.length + googleLandscapeAds.length + googlePortraitAds.length;
+    function totalFor(media, platform) {
+      return Object.values(formats)
+        .filter((format) => format.media === media && format.platform === platform)
+        .reduce((total, format) => total + collections[format.collectionKey].length, 0);
+    }
 
-      document.querySelector('[data-platform-count="meta"]').textContent = metaSquareAds.length;
-      document.querySelector('[data-platform-count="google"]').textContent = googleTotal;
+    function defaultFormatFor(media, platform) {
+      return Object.keys(formats).find((key) => {
+        const format = formats[key];
+        return format.media === media && format.platform === platform;
+      });
+    }
+
+    function updateControls() {
+      const photoTotal = Object.values(formats)
+        .filter((format) => format.media === "photo")
+        .reduce((total, format) => total + collections[format.collectionKey].length, 0);
+      const videoTotal = Object.values(formats)
+        .filter((format) => format.media === "video")
+        .reduce((total, format) => total + collections[format.collectionKey].length, 0);
+
+      document.querySelector('[data-media-count="photo"]').textContent = photoTotal;
+      document.querySelector('[data-media-count="video"]').textContent = videoTotal;
+
+      document.querySelectorAll("[data-media]").forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.media === selectedMedia));
+      });
+
+      document.querySelectorAll("[data-platform-count]").forEach((count) => {
+        count.textContent = totalFor(selectedMedia, count.dataset.platformCount);
+      });
 
       document.querySelectorAll("[data-format-count]").forEach((count) => {
         count.textContent = collections[count.dataset.formatCount].length;
       });
 
       document.querySelectorAll("[data-platform]").forEach((button) => {
+        const hasAssets = totalFor(selectedMedia, button.dataset.platform) > 0;
+        button.disabled = !hasAssets;
         button.setAttribute("aria-pressed", String(button.dataset.platform === selectedPlatform));
       });
 
       document.querySelectorAll("[data-format]").forEach((button) => {
-        const isGoogleFormat = button.hasAttribute("data-google-only");
-        button.hidden = selectedPlatform === "meta" ? isGoogleFormat : !isGoogleFormat;
+        const format = formats[button.dataset.format];
+        button.hidden = format.media !== selectedMedia || format.platform !== selectedPlatform;
         button.setAttribute("aria-pressed", String(button.dataset.format === selectedFormat));
       });
     }
@@ -1331,21 +1446,33 @@
 
       document.getElementById("ad-count").textContent = `${items.length} annonser`;
       document.getElementById("brand-subtitle").textContent = format.label;
-      document.getElementById("intro-copy").textContent = format.platform === "meta"
-        ? "Facebook-liknande feedkort med primärtext, kreativ, destination och CTA."
-        : `${format.label} · visar endast uppladdningar i denna dimensionssamling.`;
+      document.getElementById("intro-copy").textContent = format.media === "video"
+        ? "Meta-videokort med primärtext, inbyggd spelare, destination och CTA."
+        : format.platform === "meta"
+          ? "Facebook-liknande feedkort med primärtext, kreativ, destination och CTA."
+          : `${format.label} · visar endast uppladdningar i denna dimensionssamling.`;
       grid.setAttribute("aria-label", `${format.label} previews`);
 
       updateControls();
       updateStatus(format, items);
     }
 
-    document.getElementById("platform-controls").addEventListener("click", (event) => {
-      const button = event.target.closest("[data-platform]");
+    document.getElementById("media-controls").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-media]");
       if (!button) return;
 
+      selectedMedia = button.dataset.media;
+      selectedPlatform = "meta";
+      selectedFormat = defaultFormatFor(selectedMedia, selectedPlatform);
+      renderPreview();
+    });
+
+    document.getElementById("platform-controls").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-platform]");
+      if (!button || button.disabled) return;
+
       selectedPlatform = button.dataset.platform;
-      selectedFormat = selectedPlatform === "meta" ? "meta-square" : "google-square";
+      selectedFormat = defaultFormatFor(selectedMedia, selectedPlatform);
       renderPreview();
     });
 
