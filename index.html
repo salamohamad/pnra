@@ -785,6 +785,9 @@
           <button class="format-button" type="button" data-format="meta-video-portrait" hidden aria-pressed="false">
             Feed video 4:5 · 1080 × 1350 <span class="tab-count" data-format-count="meta-video-portrait">3</span>
           </button>
+          <button class="format-button" type="button" data-format="google-youtube-video" data-google-only hidden aria-pressed="false">
+            YouTube video · 16:9 <span class="tab-count" data-format-count="google-youtube-video">0</span>
+          </button>
           <button class="format-button" type="button" data-format="google-square" data-google-only hidden aria-pressed="false">
             Square · 1200 × 1200 <span class="tab-count" data-format-count="google-square">15</span>
           </button>
@@ -1111,6 +1114,8 @@
       }
     ];
 
+    const googleYoutubeVideos = [];
+
     // Each collection lists only files verified at that collection's dimensions.
     const googleSquareAds = [
       campaignAsset("kaffe-vs-koll", "kaffe-vs-koll__google-square.png"),
@@ -1169,6 +1174,7 @@
     const collections = {
       "meta-square": metaSquareAds,
       "meta-video-portrait": metaPortraitVideos,
+      "google-youtube-video": googleYoutubeVideos,
       "google-square": googleSquareAds,
       "google-landscape": googleLandscapeAds,
       "google-portrait": googlePortraitAds
@@ -1191,6 +1197,16 @@
         duration: "10 sekunder",
         collectionKey: "meta-video-portrait",
         ratio: "4 / 5"
+      },
+      "google-youtube-video": {
+        media: "video",
+        platform: "google",
+        label: "Google YouTube Video",
+        dimensions: "1920 × 1080",
+        minimum: "1280 × 720",
+        duration: "YouTube-ready video",
+        collectionKey: "google-youtube-video",
+        ratio: "16 / 9"
       },
       "google-square": {
         media: "photo",
@@ -1304,6 +1320,25 @@
 
     function renderGoogleAd(ad, index, format) {
       const loading = index < 4 ? "eager" : "lazy";
+      const creative = ad.video
+        ? `
+            <video
+              class="google-creative video-creative"
+              controls
+              playsinline
+              preload="metadata"
+              aria-label="${ad.alt}"
+            >
+              <source src="assets/${ad.video}" type="video/mp4">
+              Din webbläsare kan inte spela upp videon.
+            </video>`
+        : `
+            <img
+              class="google-creative"
+              src="assets/${ad.image}"
+              alt="Pensionera-annons: ${ad.alt}"
+              loading="${loading}"
+            >`;
 
       return `
         <article class="google-shell">
@@ -1321,12 +1356,7 @@
           </header>
 
           <div class="google-creative-stage" style="--preview-ratio: ${format.ratio}">
-            <img
-              class="google-creative"
-              src="assets/${ad.image}"
-              alt="Pensionera-annons: ${ad.alt}"
-              loading="${loading}"
-            >
+            ${creative}
           </div>
 
           <div class="google-ad-footer">
@@ -1341,11 +1371,14 @@
 
     function renderEmptyState(format) {
       const assetType = format.media === "video" ? "videor" : "bilder";
+      const platformNote = format.platform === "google" && format.media === "video"
+        ? "Google/YouTube-videor ska ligga i en egen videosamling och blandas inte med Meta-videor."
+        : "Den här fliken visar endast " + assetType + " som tillhör formatets egen dimensionssamling.";
       return `
         <div class="empty-state">
           <strong>Inga ${format.label}-${assetType} uppladdade ännu</strong>
           <p>
-            Den här fliken visar endast ${assetType} som tillhör formatets egen dimensionssamling.
+            ${platformNote}
             Ladda upp ${format.dimensions}${format.minimum ? ` eller minst ${format.minimum}` : ""}
             så läggs filen till här.
           </p>
@@ -1356,10 +1389,18 @@
       const status = document.getElementById("format-status");
       const statusText = document.getElementById("format-status-text");
 
-      if (format.media === "video") {
+      if (format.media === "video" && format.platform === "meta") {
         status.classList.remove("needs-assets");
         statusText.textContent =
-          `${items.length} Meta-videor visas. Filerna är verifierade i ${format.dimensions} (4:5), ${format.duration}, och tillhör endast videosamlingen.`;
+          `${items.length} Meta-videor visas. Filerna är verifierade i ${format.dimensions} (4:5), ${format.duration}, och tillhör endast Meta-videosamlingen.`;
+        return;
+      }
+
+      if (format.media === "video" && format.platform === "google") {
+        status.classList.toggle("needs-assets", items.length === 0);
+        statusText.textContent = items.length > 0
+          ? `${items.length} Google/YouTube-videor visas. Rekommenderat ${format.dimensions}, minimum ${format.minimum}.`
+          : `Inga Google/YouTube-videor uppladdade ännu. Lägg till 16:9-videor här när de är klara. Rekommenderat ${format.dimensions}, minimum ${format.minimum}.`;
         return;
       }
 
@@ -1419,8 +1460,8 @@
       });
 
       document.querySelectorAll("[data-platform]").forEach((button) => {
-        const hasAssets = totalFor(selectedMedia, button.dataset.platform) > 0;
-        button.disabled = !hasAssets;
+        const hasFormat = Boolean(defaultFormatFor(selectedMedia, button.dataset.platform));
+        button.disabled = !hasFormat;
         button.setAttribute("aria-pressed", String(button.dataset.platform === selectedPlatform));
       });
 
@@ -1447,7 +1488,9 @@
       document.getElementById("ad-count").textContent = `${items.length} annonser`;
       document.getElementById("brand-subtitle").textContent = format.label;
       document.getElementById("intro-copy").textContent = format.media === "video"
-        ? "Meta-videokort med primärtext, inbyggd spelare, destination och CTA."
+        ? format.platform === "meta"
+          ? "Meta-videokort med primärtext, inbyggd spelare, destination och CTA."
+          : "Google/YouTube-videor visas i en separat videosamling när rätt format laddas upp."
         : format.platform === "meta"
           ? "Facebook-liknande feedkort med primärtext, kreativ, destination och CTA."
           : `${format.label} · visar endast uppladdningar i denna dimensionssamling.`;
