@@ -761,7 +761,7 @@
             Bilder <span class="tab-count" data-media-count="photo">83</span>
           </button>
           <button class="format-button" type="button" data-media="video" aria-pressed="false">
-            Video <span class="tab-count" data-media-count="video">3</span>
+            Video <span class="tab-count" data-media-count="video">4</span>
           </button>
         </div>
       </div>
@@ -786,7 +786,7 @@
             Feed video 4:5 · 1080 × 1350 <span class="tab-count" data-format-count="meta-video-portrait">3</span>
           </button>
           <button class="format-button" type="button" data-format="google-youtube-video" data-google-only hidden aria-pressed="false">
-            YouTube video · 16:9 <span class="tab-count" data-format-count="google-youtube-video">0</span>
+            YouTube video · 16:9 <span class="tab-count" data-format-count="google-youtube-video">1</span>
           </button>
           <button class="format-button" type="button" data-format="google-square" data-google-only hidden aria-pressed="false">
             Square · 1200 × 1200 <span class="tab-count" data-format-count="google-square">15</span>
@@ -1114,7 +1114,15 @@
       }
     ];
 
-    const googleYoutubeVideos = [];
+    const googleYoutubeVideos = [
+      {
+        video: "kollar-din-pension__youtube-landscape.mp4",
+        alt: "Pensionera YouTube-video om att kolla din pension",
+        copy: "Se hela din pension samlad på ett ställe. Logga in med BankID och få koll på prognos, pensioner och möjliga förbättringar.",
+        title: "Kolla din pension på 60 sekunder",
+        url: "https://www.pensionera.se/sa-fungerar-det"
+      }
+    ];
 
     // Each collection lists only files verified at that collection's dimensions.
     const googleSquareAds = [
