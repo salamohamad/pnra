@@ -802,12 +802,14 @@
       "meta-story": { media: "photo", platform: "meta", label: "Meta Story 9:16", short: "Story 9:16", dimensions: "1080 × 1920", ratio: "9 / 16" },
       "meta-video-portrait": { media: "video", platform: "meta", label: "Meta Feed Video 4:5", short: "Feed video 4:5", dimensions: "1080 × 1350", duration: "9–16 sekunder", ratio: "4 / 5" },
       "meta-reels": { media: "video", platform: "meta", label: "Meta Reels 9:16", short: "Reels 9:16", dimensions: "1080 × 1920", duration: "upp till 90 sekunder", ratio: "9 / 16" },
-      "google-youtube-video": { media: "video", platform: "google", label: "Google YouTube Video", short: "YouTube 16:9", dimensions: "1920 × 1080", minimum: "1280 × 720", duration: "YouTube-ready video", ratio: "16 / 9" },
-      "google-youtube-shorts": { media: "video", platform: "google", label: "Google YouTube Shorts", short: "Shorts 9:16", dimensions: "1080 × 1920", duration: "upp till 60 sekunder", ratio: "9 / 16" },
-      "google-youtube-square": { media: "video", platform: "google", label: "Google Demand Gen Video 1:1", short: "Video 1:1", dimensions: "1080 × 1080", ratio: "1 / 1" },
+      "google-youtube-video": { media: "video", platform: "google", label: "Google Video 16:9", short: "Video 16:9", dimensions: "1920 × 1080", minimum: "1280 × 720", duration: "10–60 sekunder", ratio: "16 / 9" },
+      "google-youtube-shorts": { media: "video", platform: "google", label: "Google Video 9:16", short: "Video 9:16", dimensions: "1080 × 1920", duration: "10–60 sekunder", ratio: "9 / 16" },
+      "google-youtube-square": { media: "video", platform: "google", label: "Google Video 1:1", short: "Video 1:1", dimensions: "1080 × 1080", duration: "10–60 sekunder", ratio: "1 / 1" },
+      "google-youtube-portrait": { media: "video", platform: "google", label: "Google Video 4:5", short: "Video 4:5", dimensions: "1080 × 1350", duration: "10–60 sekunder", ratio: "4 / 5" },
       "google-square": { media: "photo", platform: "google", label: "Google Square", short: "Square", dimensions: "1200 × 1200", minimum: "300 × 300", ratio: "1 / 1" },
       "google-landscape": { media: "photo", platform: "google", label: "Google Landscape", short: "Landscape", dimensions: "1200 × 628", minimum: "600 × 314", ratio: "1200 / 628" },
-      "google-portrait": { media: "photo", platform: "google", label: "Google Portrait", short: "Portrait", dimensions: "960 × 1200", minimum: "480 × 600", ratio: "4 / 5" }
+      "google-portrait": { media: "photo", platform: "google", label: "Google Portrait", short: "Portrait", dimensions: "960 × 1200", minimum: "480 × 600", ratio: "4 / 5" },
+      "google-story": { media: "photo", platform: "google", label: "Google Story 9:16", short: "Story 9:16", dimensions: "1080 × 1920", minimum: "600 × 1067", ratio: "9 / 16" }
     };
     Object.keys(formats).forEach((key) => { formats[key].collectionKey = key; });
 
