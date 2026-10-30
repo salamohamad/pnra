@@ -3,6 +3,22 @@ window.PNRA_MANIFEST = {
   "version": 1,
   "items": [
     {
+      "file": "tre-jobb-bygget-v3__still-4.png",
+      "media": "photo",
+      "platform": "meta",
+      "format": "meta-story",
+      "title": "tre-jobb-bygget v3 — still candidate 4",
+      "copy": "Kandidat 4 — välj en för video",
+      "alt": "Pensionera-annons: tre-jobb-bygget v3 — still candidate 4",
+      "url": "https://pensionera.se",
+      "added": "2026-10-30",
+      "width": 1080,
+      "height": 1920,
+      "source": "luna",
+      "draft_id": null,
+      "sha256": "2fbf3e8b026dd556"
+    },
+    {
       "file": "tre-jobb-bygget-v3__still-3.png",
       "media": "photo",
       "platform": "meta",
