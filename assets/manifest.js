@@ -3,6 +3,22 @@ window.PNRA_MANIFEST = {
   "version": 1,
   "items": [
     {
+      "file": "forsta-jobbet__still-4.png",
+      "media": "photo",
+      "platform": "meta",
+      "format": "meta-story",
+      "title": "forsta-jobbet — still candidate 4",
+      "copy": "Still candidate 4 (picked: 2)",
+      "alt": "Pensionera-annons: forsta-jobbet — still candidate 4",
+      "url": "https://www.pensionera.se/sa-fungerar-det",
+      "added": "2026-11-04",
+      "width": 1080,
+      "height": 1920,
+      "source": "luna",
+      "draft_id": null,
+      "sha256": "d87a105f873391db"
+    },
+    {
       "file": "forsta-jobbet__still-3.png",
       "media": "photo",
       "platform": "meta",
