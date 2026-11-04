@@ -3,6 +3,38 @@ window.PNRA_MANIFEST = {
   "version": 1,
   "items": [
     {
+      "file": "forsta-jobbet-v2__still-2.png",
+      "media": "photo",
+      "platform": "meta",
+      "format": "meta-story",
+      "title": "forsta-jobbet v2 — still (phone up)",
+      "copy": "Stillbild som videon animerades från (kandidat 1–2; 2 vald)",
+      "alt": "Pensionera-annons: forsta-jobbet v2 — still (phone up)",
+      "url": "https://pensionera.se",
+      "added": "2026-11-04",
+      "width": 1080,
+      "height": 1920,
+      "source": "luna",
+      "draft_id": null,
+      "sha256": "2f8ad621435d80e7"
+    },
+    {
+      "file": "forsta-jobbet-v2__still-1.png",
+      "media": "photo",
+      "platform": "meta",
+      "format": "meta-story",
+      "title": "forsta-jobbet v2 — still (phone up)",
+      "copy": "Stillbild som videon animerades från (kandidat 1–2; 2 vald)",
+      "alt": "Pensionera-annons: forsta-jobbet v2 — still (phone up)",
+      "url": "https://pensionera.se",
+      "added": "2026-11-04",
+      "width": 1080,
+      "height": 1920,
+      "source": "luna",
+      "draft_id": null,
+      "sha256": "f457cf47a38fcb18"
+    },
+    {
       "file": "forsta-jobbet-v2-arthur__meta-feed-video.mp4",
       "media": "video",
       "platform": "meta",
